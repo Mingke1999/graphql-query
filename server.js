@@ -16,6 +16,27 @@ const resolvers = {
         },
         game(_, args){
             return db.games.find((game)=>args.id === game.id)
+            //Game parent argument
+        }
+    },
+    Game: {
+        reviews(parent){
+            //parent argument is a reference to the value returnde by parent resolver
+            return db.reviews.filter((review)=>parent.id === review.game_id)
+        }
+    },
+    Author:{
+        reviews(parent){
+            //parent argument is a reference to the value returnde by parent resolver
+            return db.reviews.filter((review)=>parent.id === review.author_id)
+        }
+    },
+    Review:{
+        author(parent){
+            return db.authors.find((author)=> author.id === parent.author_id)
+        },
+        game(parent){
+            return db.games.find((game)=> game.id === parent.game_id)
         }
     }
 }
